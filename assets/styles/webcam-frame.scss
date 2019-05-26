@@ -1,0 +1,105 @@
+$purple: rgba(128, 0, 155, 1);
+$green: rgba(14, 227, 172, 1);
+$outer_frame_radius: 3px;
+$inner_frame_radius: 7px;
+$width: 640px;
+$height: 360px;
+
+// Apply a natural box layout model to all elements
+// but allowing components to change
+// http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+  width: $width;
+  height: $height;
+  padding: 0;
+  margin: 0;
+  overflow: hidden
+}
+
+#container {
+  width: 100%;
+  height: 100%;
+
+  color: white;
+  font-size: 20px;
+
+  position: relative;
+}
+
+#outer-frame {
+  width: 100%;
+  height: 100%;
+  border: $outer_frame_radius+$inner_frame_radius solid;
+  border-image: linear-gradient(to top, $purple, $green) 1 1;
+  position: relative;
+
+  .diagonal-line {
+    transform: rotate(30deg);
+    width: $outer_frame_radius;
+    height: 100px;
+    z-index: 2;
+  }
+
+  .green {
+    background-color: rgba(14, 227, 172, 1);
+  }
+
+  .purple {
+    background-color: rgba(128, 0, 155, 1)
+  }
+}
+
+#inner-frame {
+  width: calc(100% + 2*#{$inner_frame_radius});
+  height: calc(100% + 2*#{$inner_frame_radius});
+
+  position: absolute;
+  z-index: 1;
+  top: -$inner_frame_radius;
+  left: -$inner_frame_radius;
+
+  border: $inner_frame_radius solid;
+  border-image: linear-gradient(to top, darken($purple, 13%), darken($green, 13%)) 1 1;
+
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-name: webcamFrameSlide;
+}
+
+
+@keyframes webcamFrameSlide {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 20%, 627px 21%, 627px 45%, 100% 44%, 100% 100%, 0 100%, 0 80%, 14px 78%, 14px 55%, 0 57%)
+  }
+
+  50% {
+    clip-path: polygon(0 0, 100% 0, 100% 10%, 627px 11%, 627px 35%, 100% 34%, 100% 100%, 0 100%, 0 90%, 14px 88%, 14px 70%, 0 72%)
+  }
+
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 20%, 627px 21%, 627px 45%, 100% 44%, 100% 100%, 0 100%, 0 80%, 14px 78%, 14px 55%, 0 57%)
+  }
+}
+
+#line-one {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+}
+
+#line-two {
+  position: absolute;
+  top: -20px;
+  left: -5px;
+}
+
+#line-three {
+  position: absolute;
+  right: 0px;
+  bottom: -20px;
+}
